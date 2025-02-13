@@ -13,8 +13,9 @@ loggingInterceptor = "4.12.0"
 serialization = "2.0.21"
 material = "1.12.0"
 retrofit = "2.11.0"
-kotlin-serialization = "1.7.3"
 retrofitSerializationConverter = "1.0.0"
+retrofitAdaptersResult = "1.0.12"
+kotlin-serialization = "1.7.3"
 kotlin-coroutine = "1.9.0"
 ksp = "2.0.20-1.0.24"
 hilt-version = "2.51.1"
@@ -41,9 +42,10 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
-retrofit= { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-adapters-result = { module = "com.github.skydoves:retrofit-adapters-result", version.ref = "retrofitAdaptersResult" }
 
-kotlin-serialization-json = {module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization"}
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitSerializationConverter" }
 
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "android-lifecycle" }
@@ -56,7 +58,7 @@ hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", ve
 
 
 
-kotlin-coroutine-core = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine"}
+kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
 
 
 

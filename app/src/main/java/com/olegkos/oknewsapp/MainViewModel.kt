@@ -13,21 +13,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val newsApi: NewsApi): ViewModel() {
+class MainViewModel @Inject constructor(val newsApi: NewsApi) : ViewModel() {
   private val _uiState: MutableStateFlow<HomeUiState> =
     MutableStateFlow(
       HomeUiState(
-      article = emptyList()
-    )
+        article = emptyList()
+      )
     )
   var uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
   fun get() = viewModelScope.launch {
 
-val response = newsApi.getAll(query = "android")
-_uiState.update { currentState ->
-  currentState.copy(article = response.body()?.articles!!)
-}
+    val response = newsApi.getAll(query = "android")
+    _uiState.update { currentState ->
+      currentState.copy(article = response.body()?.articles!!)
+    }
 
   }
 }
@@ -35,5 +35,5 @@ _uiState.update { currentState ->
 
 data class HomeUiState(
 
-  val article:  List<ArticleDTO>,
+  val article: List<ArticleDTO>,
 )

@@ -2,6 +2,7 @@ package com.olegkos.newsapi.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.olegkos.newsapi.NewsApi
+import com.olegkos.newsapi.RemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,5 +68,12 @@ object RemoteModule {
   @Singleton
   fun provideNewsApi(retrofit: Retrofit): NewsApi {
     return retrofit.create(NewsApi::class.java)
+  }
+
+  // Предоставляем RemoteDataSource
+  @Provides
+  @Singleton
+  fun provideRemoteDataSource(newsApi: NewsApi): RemoteDataSource {
+    return RemoteDataSource(newsApi)
   }
 }

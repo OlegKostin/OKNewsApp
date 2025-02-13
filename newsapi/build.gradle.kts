@@ -19,8 +19,8 @@ android {
     consumerProguardFiles("consumer-rules.pro")
   }
   val localProperties = Properties()
-  val localPropertiesFile = File(rootDir,"apik.properties")
-  if(localPropertiesFile.exists() && localPropertiesFile.isFile){
+  val localPropertiesFile = File(rootDir, "apik.properties")
+  if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
     localPropertiesFile.inputStream().use {
       localProperties.load(it)
     }
@@ -58,14 +58,13 @@ android {
 }
 
 dependencies {
-  api(libs.retrofit)
+  api(libs.retrofit) /*TODO("change back")*/
   api(libs.kotlin.serialization.json)
   api(libs.retrofit2.kotlinx.serialization.converter)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.appcompat)
-  implementation(libs.material)
   implementation(libs.kotlin.coroutine.core)
-  implementation (libs.logging.interceptor)
+  implementation(libs.logging.interceptor)
 
 
   implementation(libs.hilt.android)
