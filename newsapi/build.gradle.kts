@@ -4,6 +4,8 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlinSerialization)
+  alias(libs.plugins.ksp)
+  alias(libs.plugins.hilt.plugin)
 }
 
 android {
@@ -63,5 +65,11 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.material)
   implementation(libs.kotlin.coroutine.core)
-  implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+  implementation (libs.logging.interceptor)
+
+
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
+  implementation(libs.hilt.navigation.compose)
+
 }

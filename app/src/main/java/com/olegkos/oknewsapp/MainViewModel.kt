@@ -2,31 +2,32 @@ package com.olegkos.oknewsapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.olegkos.newsapi.RetrofitInstance
+import com.olegkos.newsapi.NewsApi
 import com.olegkos.newsapi.models.ArticleDTO
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(val newsApi: NewsApi): ViewModel() {
   private val _uiState: MutableStateFlow<HomeUiState> =
     MutableStateFlow(
       HomeUiState(
-        article = ArticleDTO(author = "no")
-      )
+      article = emptyList()
+    )
     )
   var uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-  init {
-    get()
-  }
-
   fun get() = viewModelScope.launch {
 
-    val response = RetrofitInstance.api.getAll(query = "android")
-    _uiState.value =
-      HomeUiState(article = response.articles.firstOrNull() ?: ArticleDTO(author = "No author"))
+val response = newsApi.getAll(query = "android")
+_uiState.update { currentState ->
+  currentState.copy(article = response.body()?.articles!!)
+}
 
   }
 }
@@ -34,5 +35,5 @@ class MainViewModel : ViewModel() {
 
 data class HomeUiState(
 
-  val article: ArticleDTO,
+  val article:  List<ArticleDTO>,
 )
