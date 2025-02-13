@@ -1,6 +1,7 @@
 package com.olegkos.oknewsapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       val viewModel: MainViewModel = hiltViewModel()
-      val state = viewModel.uiState.collectAsState()
+      val state by viewModel.uiState.collectAsState()
 
       OKNewsAppTheme {
         Column(
@@ -37,10 +39,12 @@ class MainActivity : ComponentActivity() {
           verticalArrangement = Arrangement.Center,
           horizontalAlignment = Alignment.CenterHorizontally
         ) {
-          Button(onClick = { viewModel.get() }) { }
+          Button(onClick = { viewModel.get() }) {
+            Text(text = if (state.error.isNotEmpty()) state.error else "Загрузка...")
+          }
 
           LazyColumn {
-            items(state.value.article) {
+            items(state.article) {
               Text(
                 text = it.author,
                 style = MaterialTheme.typography.displayMedium

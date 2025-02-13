@@ -11,7 +11,7 @@ interface NewsApi {
 
   @GET("everything")
   suspend fun getAll(
-    @Query("apiKey") key: String = BuildConfig.API_KEY,
+    @Query("apiKey") key: String = "",//BuildConfig.API_KEY,
     @Query("q") query: String,
   ): Response<ResponseDTO<ArticleDTO>>
 }

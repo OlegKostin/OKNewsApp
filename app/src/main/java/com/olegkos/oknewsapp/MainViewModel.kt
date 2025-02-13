@@ -1,39 +1,61 @@
 package com.olegkos.oknewsapp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.olegkos.newsapi.NewsApi
-import com.olegkos.newsapi.models.ArticleDTO
+import com.olegkos.newsdata.domain.Repository
+import com.olegkos.newsdata.models.Article
+import com.olegkos.newsdata.models.RequestResult
+import com.olegkos.newsdata.models.TotalResultArticles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val newsApi: NewsApi) : ViewModel() {
+class MainViewModel @Inject constructor(val repository: Repository) : ViewModel() {
   private val _uiState: MutableStateFlow<HomeUiState> =
     MutableStateFlow(
       HomeUiState(
-        article = emptyList()
+        article = emptyList(),
+        error = ""
       )
     )
   var uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
   fun get() = viewModelScope.launch {
 
-    val response = newsApi.getAll(query = "android")
-    _uiState.update { currentState ->
-      currentState.copy(article = response.body()?.articles!!)
+    repository.getNews("android").map {
+      it.toHomeUiState()
+    }.collect {
+      _uiState.value = _uiState.value.copy(article = it.article)
     }
-
   }
 }
 
 
 data class HomeUiState(
-
-  val article: List<ArticleDTO>,
+  val error: String,
+  val article: List<Article> = emptyList(),
 )
+
+fun RequestResult<TotalResultArticles<Article>>.toHomeUiState(): HomeUiState {
+  return when (this) {
+    is RequestResult.InProgress -> {
+      HomeUiState(article = emptyList(), error = "")
+    }
+
+    is RequestResult.Success -> {
+
+      HomeUiState(error = "", article = this.data.articles)
+    }
+
+    is RequestResult.Error -> {
+      Log.d("TAG", this.error?.message!!)
+      HomeUiState(error = this.error?.message ?: "Неизвестная ошибка")
+    }
+  }
+}
