@@ -48,7 +48,7 @@ dependencies {
   implementation(libs.androidx.ui.graphics)
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material3)
-  implementation(project(":newsdata"))
+
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
@@ -61,8 +61,7 @@ dependencies {
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.navigation.compose)
 
-  implementation(project(":newsapi"))
-  implementation(project(":newsdata"))
+  implementation(project(":main-ui"))
 
 
 }

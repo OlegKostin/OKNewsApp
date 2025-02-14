@@ -23,3 +23,4 @@ rootProject.name = "OKNewsApp"
 include(":app")
 include(":newsapi")
 include(":newsdata")
+include(":main-ui")

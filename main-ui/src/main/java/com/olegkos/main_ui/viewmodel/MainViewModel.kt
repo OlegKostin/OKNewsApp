@@ -1,4 +1,4 @@
-package com.olegkos.oknewsapp
+package com.olegkos.main_ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
