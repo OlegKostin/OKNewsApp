@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(val repository: Repository) : ViewModel(
     repository.getNews("android").map {
       it.toHomeUiState()
     }.collect {
-      _uiState.value = _uiState.value.copy(article = it.article)
+      _uiState.value = _uiState.value.copy(article = it.article, error = it.error)
     }
   }
 }

@@ -10,7 +10,7 @@ class RemoteDataSource @Inject constructor(private val newsApi: NewsApi) {
 
   suspend fun getNews(query: String): ApiResult<ResponseDTO<ArticleDTO>> {
     return try {
-      val response = newsApi.getAll(query = query)
+      val response = newsApi.getTopNews()
 
       if (response.isSuccessful) {
         response.body()?.let {

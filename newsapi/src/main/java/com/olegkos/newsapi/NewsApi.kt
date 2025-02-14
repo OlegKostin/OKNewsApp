@@ -9,10 +9,10 @@ import retrofit2.http.Query
 //Api Details https://newsapi.org/docs/endpoints/everything
 interface NewsApi {
 
-  @GET("everything")
-  suspend fun getAll(
-    @Query("apiKey") key: String = "",//BuildConfig.API_KEY,
-    @Query("q") query: String,
+  @GET("top-headlines")
+  suspend fun getTopNews(
+    @Query("apiKey") key: String = BuildConfig.API_KEY,
+    @Query("country") country: String = "us",
   ): Response<ResponseDTO<ArticleDTO>>
 }
 

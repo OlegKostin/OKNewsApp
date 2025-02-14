@@ -32,7 +32,10 @@ fun <E> ResponseDTO<E>.toTotalResultArticles(): TotalResultArticles<Article> {
     articles = this.articles.map { article ->
       // Маппим каждый элемент в списке articles в Article
       when (article) {
-        is ArticleDTO -> Article(author = article.author) // Конвертируем ArticleDTO в Article
+        is ArticleDTO -> Article(
+          author = article.author ?: "no author",
+          title = article.title,
+        ) // Конвертируем ArticleDTO в Article
         else -> throw IllegalArgumentException("Unknown article type")
       }
     }
