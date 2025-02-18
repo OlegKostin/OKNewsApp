@@ -4,8 +4,7 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlinSerialization)
-  alias(libs.plugins.ksp)
-  alias(libs.plugins.hilt.plugin)
+
 }
 
 android {
@@ -66,9 +65,7 @@ dependencies {
   implementation(libs.kotlin.coroutine.core)
   implementation(libs.logging.interceptor)
 
+  implementation (libs.dagger)
 
-  implementation(libs.hilt.android)
-  ksp(libs.hilt.compiler)
-  implementation(libs.hilt.navigation.compose)
 
 }

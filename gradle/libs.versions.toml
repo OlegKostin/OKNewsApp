@@ -1,6 +1,7 @@
 [versions]
 agp = "8.7.3"
-kotlin = "2.0.0"
+daggerCompiler = "2.51.1"
+kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -10,19 +11,22 @@ activityCompose = "1.10.0"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
 loggingInterceptor = "4.12.0"
-serialization = "2.0.21"
+serialization = "2.1.10"
 material = "1.12.0"
 retrofit = "2.11.0"
 retrofitSerializationConverter = "1.0.0"
 retrofitAdaptersResult = "1.0.12"
 kotlin-serialization = "1.7.3"
 kotlin-coroutine = "1.9.0"
-ksp = "2.0.20-1.0.24"
 hilt-version = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 
+
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "daggerCompiler" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerCompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -69,5 +73,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
-hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+

@@ -13,12 +13,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelProvider
+
 import com.olegkos.main_ui.viewmodel.MainViewModel
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-  NewsMainScreen(viewModel = hiltViewModel(), modifier = modifier)
+fun MainScreen(factory: ViewModelProvider.Factory, viewModel: MainViewModel) {
+  NewsMainScreen(viewModel = viewModel,  )
 }
 
 @Composable
