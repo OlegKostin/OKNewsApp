@@ -58,7 +58,7 @@ android {
 }
 
 dependencies {
-  api(libs.retrofit) /*TODO("change back")*/
+  api(libs.retrofit)
   api(libs.kotlin.serialization.json)
   api(libs.retrofit2.kotlinx.serialization.converter)
   implementation(libs.androidx.core.ktx)
