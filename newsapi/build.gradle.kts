@@ -4,7 +4,7 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlinSerialization)
-
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -57,7 +57,7 @@ android {
 }
 
 dependencies {
-  api(libs.retrofit) /*TODO("change back")*/
+  api(libs.retrofit)
   api(libs.kotlin.serialization.json)
   api(libs.retrofit2.kotlinx.serialization.converter)
   implementation(libs.androidx.core.ktx)
@@ -65,7 +65,7 @@ dependencies {
   implementation(libs.kotlin.coroutine.core)
   implementation(libs.logging.interceptor)
 
-  implementation (libs.dagger)
 
-
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
 }

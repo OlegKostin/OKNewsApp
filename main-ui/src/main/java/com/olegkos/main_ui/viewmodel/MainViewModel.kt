@@ -7,6 +7,7 @@ import com.olegkos.newsdata.domain.Repository
 import com.olegkos.newsdata.models.Article
 import com.olegkos.newsdata.models.RequestResult
 import com.olegkos.newsdata.models.TotalResultArticles
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+@HiltViewModel
 class MainViewModel @Inject constructor(val repository: Repository) : ViewModel() {
   private val _uiState: MutableStateFlow<HomeUiState> =
     MutableStateFlow(

@@ -3,14 +3,19 @@ package com.olegkos.newsdata.di
 import com.olegkos.newsapi.RemoteDataSource
 import com.olegkos.newsdata.data.RepositoryImpl
 import com.olegkos.newsdata.domain.Repository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module
-interface RepositoryModule {
+@InstallIn(SingletonComponent::class)
+object RepositoryModule {
+  @Provides
+  fun provideRepositoryImpl(remoteDataSource: RemoteDataSource): Repository {
+    return RepositoryImpl(
+      remoteDataSource = remoteDataSource
+    )
+  }
 
-  @Binds
-  fun bindRepositoryImpl_to_Repository(repositoryImpl: RepositoryImpl): Repository
 }

@@ -1,7 +1,7 @@
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
-
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -42,8 +42,8 @@ dependencies {
 
 
   implementation(libs.kotlin.coroutine.core)
-
-  implementation (libs.dagger)
+  ksp(libs.hilt.compiler)
+  implementation(libs.hilt.android)
 
   implementation(project(":newsapi"))
 }
