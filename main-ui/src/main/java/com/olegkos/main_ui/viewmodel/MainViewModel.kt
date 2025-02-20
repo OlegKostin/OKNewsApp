@@ -1,61 +1,26 @@
 package com.olegkos.main_ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.olegkos.main_ui.NewsUiState
+import com.olegkos.main_ui.utils.toNewsUiState
 import com.olegkos.newsdata.domain.Repository
-import com.olegkos.newsdata.models.Article
-import com.olegkos.newsdata.models.RequestResult
-import com.olegkos.newsdata.models.TotalResultArticles
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val repository: Repository) : ViewModel() {
-  private val _uiState: MutableStateFlow<HomeUiState> =
-    MutableStateFlow(
-      HomeUiState(
-        article = emptyList(),
-        error = ""
-      )
-    )
-  var uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+  public val state: StateFlow<NewsUiState> =
+    repository.getNews(query = "android")
+      .map { it.toNewsUiState() }
+      .stateIn(viewModelScope, SharingStarted.Lazily, NewsUiState.None)
 
-  fun get() = viewModelScope.launch {
 
-    repository.getNews("android").map {
-      it.toHomeUiState()
-    }.collect {
-      _uiState.value = _uiState.value.copy(article = it.article, error = it.error)
-    }
-  }
 }
 
 
-data class HomeUiState(
-  val error: String,
-  val article: List<Article> = emptyList(),
-)
 
-fun RequestResult<TotalResultArticles<Article>>.toHomeUiState(): HomeUiState {
-  return when (this) {
-    is RequestResult.InProgress -> {
-      HomeUiState(article = emptyList(), error = "")
-    }
-
-    is RequestResult.Success -> {
-
-      HomeUiState(error = "", article = this.data.articles)
-    }
-
-    is RequestResult.Error -> {
-      Log.d("TAG", this.error?.message!!)
-      HomeUiState(error = this.error?.message ?: "Неизвестная ошибка")
-    }
-  }
-}

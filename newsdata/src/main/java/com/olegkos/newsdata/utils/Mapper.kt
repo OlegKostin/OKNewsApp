@@ -10,17 +10,14 @@ import com.olegkos.newsdata.models.TotalResultArticles
 fun <T : Any> ApiResult<T>.toRequestResult(): RequestResult<T> {
   return when (this) {
     is ApiResult.Success -> {
-      // В случае успеха возвращаем RequestResult.Success
       RequestResult.Success(data = this.data)
     }
 
     is ApiResult.Error -> {
-      // В случае ошибки, передаем ошибку в RequestResult.Error
       RequestResult.Error(data = null, error = this.exception)
     }
 
     ApiResult.Loading -> {
-      // В случае загрузки, возвращаем RequestResult.InProgress
       RequestResult.InProgress()
     }
   }
@@ -30,12 +27,16 @@ fun <E> ResponseDTO<E>.toTotalResultArticles(): TotalResultArticles<Article> {
   return TotalResultArticles(
     totalResults = this.totalResults,
     articles = this.articles.map { article ->
-      // Маппим каждый элемент в списке articles в Article
       when (article) {
         is ArticleDTO -> Article(
-          author = article.author ?: "no author",
+          author = article.author,
           title = article.title,
-        ) // Конвертируем ArticleDTO в Article
+          description = article.description,
+          publishedAt = article.publishedAt,
+          url = article.url,
+          urlToImage = article.urlToImage,
+        )
+
         else -> throw IllegalArgumentException("Unknown article type")
       }
     }

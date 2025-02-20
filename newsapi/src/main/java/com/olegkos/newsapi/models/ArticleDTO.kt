@@ -7,10 +7,9 @@ import kotlinx.serialization.Serializable
 data class ArticleDTO(
   @SerialName("author") val author: String?,
   @SerialName("title") val title: String,
-//    val description: String,
-//    val publishedAt: String,
-//    val source: Source,
-//    val title: String,
-//    val url: String,
-//    val urlToImage: String
+  @SerialName("description") val description: String?,
+  @SerialName("publishedAt") val publishedAt: String?,
+  //@SerialName("source")val source: SourceDTO,
+  @SerialName("url") val url: String?,
+  @SerialName("urlToImage") val urlToImage: String?,
 )
