@@ -6,7 +6,6 @@ import com.olegkos.newsdata.domain.Repository
 import com.olegkos.newsdata.models.Article
 import com.olegkos.newsdata.models.RequestResult
 import com.olegkos.newsdata.models.TotalResultArticles
-import com.olegkos.newsdata.utils.toRequestResult
 import com.olegkos.newsdata.utils.toTotalResultArticles
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,15 +16,12 @@ class RepositoryImpl @Inject constructor(
 ) : Repository {
 
   // Маппим результат из RemoteDataSource
-  override fun getNews(query: String): Flow<RequestResult<TotalResultArticles<Article>>> {
+  override fun getNews(): Flow<RequestResult<TotalResultArticles<Article>>> {
     return flow {
-      emit(RequestResult.InProgress())
 
+    emit(RequestResult.InProgress())
 
-      val apiResult = remoteDataSource.getNews(query)
-
-
-      val requestResult = apiResult.toRequestResult()
+      val apiResult = remoteDataSource.getNews()
 
       // Маппим ResponseDTO в TotalResultArticles
       when (apiResult) {

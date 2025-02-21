@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
-  fun getNews(query: String): Flow<RequestResult<TotalResultArticles<Article>>>
+  fun getNews(): Flow<RequestResult<TotalResultArticles<Article>>>
 
 }

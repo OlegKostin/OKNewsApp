@@ -59,6 +59,6 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
 
   implementation(libs.coil.compose)
-
+  implementation(libs.coil.network.okhttp)
   implementation(project(":newsdata"))
 }

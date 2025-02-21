@@ -15,11 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
   public val state: StateFlow<NewsUiState> =
-    repository.getNews(query = "android")
+    repository.getNews()
       .map { it.toNewsUiState() }
       .stateIn(viewModelScope, SharingStarted.Lazily, NewsUiState.None)
-
-
 }
 
 

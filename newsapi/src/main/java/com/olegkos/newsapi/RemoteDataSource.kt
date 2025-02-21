@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val newsApi: NewsApi) {
 
-  suspend fun getNews(query: String): ApiResult<ResponseDTO<ArticleDTO>> {
-    return try {
+  suspend fun getNews(): ApiResult<ResponseDTO<ArticleDTO>> {
+     try {
       val response = newsApi.getTopNews()
 
       if (response.isSuccessful) {
@@ -29,7 +29,6 @@ class RemoteDataSource @Inject constructor(private val newsApi: NewsApi) {
               "Неверный запрос. Возможно, отсутствует параметр или он неправильно настроен"
             )
           )
-
           401 -> ApiResult.Error(
             ApiException(
               401,

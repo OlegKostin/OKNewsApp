@@ -13,6 +13,9 @@ interface NewsApi {
   suspend fun getTopNews(
     @Query("apiKey") key: String = BuildConfig.API_KEY,
     @Query("country") country: String = "us",
+//    @Query("pageSize") pageSize: Int,
+//    @Query("page") page: Int,
+
   ): Response<ResponseDTO<ArticleDTO>>
 }
 
