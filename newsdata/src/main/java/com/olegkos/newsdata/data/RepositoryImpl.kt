@@ -1,5 +1,8 @@
 package com.olegkos.newsdata.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.olegkos.newsapi.RemoteDataSource
 import com.olegkos.newsapi.utils.ApiResult
 import com.olegkos.newsdata.domain.Repository
@@ -8,36 +11,32 @@ import com.olegkos.newsdata.models.RequestResult
 import com.olegkos.newsdata.models.TotalResultArticles
 import com.olegkos.newsdata.utils.toTotalResultArticles
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
   private val remoteDataSource: RemoteDataSource
 ) : Repository {
 
-  // Маппим результат из RemoteDataSource
-  override fun getNews(): Flow<RequestResult<TotalResultArticles<Article>>> {
+  override fun getNews(pageSize: Int): Flow<RequestResult<PagingData<Article>>> {
     return flow {
-
-    emit(RequestResult.InProgress())
-
-      val apiResult = remoteDataSource.getNews()
-
-      // Маппим ResponseDTO в TotalResultArticles
-      when (apiResult) {
-        is ApiResult.Success -> {
-          // Маппим данные из ApiResult.Success
-          val responseDTO = apiResult.data
-          val totalResultArticles = responseDTO.toTotalResultArticles()
-          emit(RequestResult.Success(totalResultArticles))
+      emit(RequestResult.InProgress())
+      try {
+        val pager = Pager(
+          config = PagingConfig(
+            pageSize = pageSize,
+            enablePlaceholders = false,
+            prefetchDistance = pageSize / 2
+          ),
+          pagingSourceFactory = { NewsPagingSource(remoteDataSource) }
+        ).flow
+        pager.collect {
+          emit(RequestResult.Success(it))
         }
-
-        is ApiResult.Error -> {
-          // Маппим ошибку из ApiResult.Error
-          emit(RequestResult.Error(data = null, error = apiResult.exception))
-        }
-
-        ApiResult.Loading -> emit(RequestResult.InProgress())
+      } catch (e: Exception) {
+        emit(RequestResult.Error(data = null, error = e))
       }
     }
   }

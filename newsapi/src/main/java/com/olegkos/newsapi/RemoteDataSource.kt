@@ -8,20 +8,20 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val newsApi: NewsApi) {
 
-  suspend fun getNews(): ApiResult<ResponseDTO<ArticleDTO>> {
+  suspend fun getNews(page: Int, loadSize: Int): ApiResult<ResponseDTO<ArticleDTO>> {
      try {
-      val response = newsApi.getTopNews()
+       val response = newsApi.getTopNews(page = page, pageSize = loadSize)
 
       if (response.isSuccessful) {
         response.body()?.let {
-          // Возвращаем успешный результат
+
           return ApiResult.Success(it)
         } ?: run {
-          // Тело пустое, возвращаем ошибку
+
           return ApiResult.Error(ApiException(204, "Тело ответа пустое"))
         }
       } else {
-        // Обрабатываем ошибки по статусам
+
         return when (response.code()) {
           400 -> ApiResult.Error(
             ApiException(

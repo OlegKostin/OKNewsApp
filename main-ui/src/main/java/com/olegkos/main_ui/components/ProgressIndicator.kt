@@ -26,9 +26,6 @@ fun ProgressIndicator(
       CircularProgressIndicator()
     }
 
-    val articles = state.articles
-    if (articles != null) {
-      {} //TODO
-    }
+
   }
 }

@@ -45,5 +45,7 @@ dependencies {
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.android)
 
+  implementation(libs.paging.compose)
+
   implementation(project(":newsapi"))
 }
