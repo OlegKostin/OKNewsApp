@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -41,17 +42,18 @@ object RemoteModule {
   ): OkHttpClient {
     return OkHttpClient.Builder()
       .addInterceptor(loggingInterceptor)
+      .readTimeout(15, TimeUnit.SECONDS)
+      .connectTimeout(15, TimeUnit.SECONDS)
       .build()
   }
 
-  // Предоставляем Json для сериализации
+
   @Provides
   @Singleton
   fun provideJson(): Json {
     return Json { ignoreUnknownKeys = true }
   }
 
-  // Предоставляем Retrofit
   @Provides
   @Singleton
   fun provideRetrofit(
@@ -68,7 +70,7 @@ object RemoteModule {
       .build()
   }
 
-  // Предоставляем NewsApi
+
   @Provides
   @Singleton
   fun provideNewsApi(retrofit: Retrofit): NewsApi {

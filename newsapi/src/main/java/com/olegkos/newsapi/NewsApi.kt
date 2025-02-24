@@ -16,7 +16,7 @@ interface NewsApi {
     @Query("pageSize") pageSize: Int,
     @Query("page") page: Int,
 
-  ): Response<ResponseDTO<ArticleDTO>>
+    ): Response<ResponseDTO<ArticleDTO>>
 }
 
 

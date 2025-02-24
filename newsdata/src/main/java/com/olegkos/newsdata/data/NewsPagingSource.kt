@@ -6,8 +6,9 @@ import com.olegkos.newsapi.RemoteDataSource
 import com.olegkos.newsapi.utils.ApiResult
 import com.olegkos.newsdata.models.Article
 import com.olegkos.newsdata.utils.toTotalResultArticles
+import javax.inject.Inject
 
-class NewsPagingSource(
+class NewsPagingSource @Inject constructor(
   private val remoteDataSource: RemoteDataSource
 ) : PagingSource<Int, Article>() {
 
@@ -15,7 +16,7 @@ class NewsPagingSource(
     val page = params.key ?: 1
     val pageSize = params.loadSize
     return try {
-      val response = remoteDataSource.getNews(page,pageSize)
+      val response = remoteDataSource.getNews(page, pageSize)
       if (response is ApiResult.Success) {
         val articles = response.data.toTotalResultArticles().articles
         LoadResult.Page(
@@ -32,9 +33,9 @@ class NewsPagingSource(
   }
 
   override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
-    return state.anchorPosition?.let {
-      state.closestPageToPosition(it)?.prevKey?.plus(1)
-        ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+    return state.anchorPosition?.let { anchorPosition ->
+      val anchorPage = state.closestPageToPosition(anchorPosition)
+      anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
     }
   }
 }

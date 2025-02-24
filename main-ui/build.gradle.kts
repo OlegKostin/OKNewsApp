@@ -62,7 +62,7 @@ dependencies {
   implementation(libs.coil.network.okhttp)
 
   implementation(libs.paging.compose)
-implementation(libs.androidx.paging.runtime.ktx)
+  implementation(libs.androidx.paging.runtime.ktx)
 
   implementation(project(":newsdata"))
 }
