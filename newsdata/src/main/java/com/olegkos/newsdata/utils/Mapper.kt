@@ -1,5 +1,6 @@
 package com.olegkos.newsdata.utils
 
+import com.olegkos.news_database.models.ArticleEntity
 import com.olegkos.newsapi.models.ArticleDTO
 import com.olegkos.newsapi.models.ResponseDTO
 import com.olegkos.newsdata.models.Article
@@ -22,5 +23,27 @@ fun <E> ResponseDTO<E>.toTotalResultArticles(): TotalResultArticles<Article> {
           urlToImage = article.urlToImage!!,
         )
       }
+  )
+}
+
+fun ArticleDTO.toArticleEntity(): ArticleEntity {
+  return ArticleEntity(
+    author = this.author,
+    title = this.title,
+    description = this.description,
+    publishedAt = this.publishedAt,
+    url = this.url,
+    urlToImage = this.urlToImage
+  )
+}
+
+fun ArticleEntity.toArticle(): Article {
+  return Article(
+    author = this.author,
+    title = this.title,
+    description = this.description,
+    publishedAt = this.publishedAt,
+    url = this.url,
+    urlToImage = this.urlToImage ?: ""
   )
 }

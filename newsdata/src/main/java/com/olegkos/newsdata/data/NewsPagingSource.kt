@@ -1,13 +1,6 @@
 package com.olegkos.newsdata.data
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import com.olegkos.newsapi.RemoteDataSource
-import com.olegkos.newsapi.utils.ApiResult
-import com.olegkos.newsdata.models.Article
-import com.olegkos.newsdata.utils.toTotalResultArticles
-import javax.inject.Inject
-
+/* i will need it later, if will add pagination without local db saving
 class NewsPagingSource @Inject constructor(
   private val remoteDataSource: RemoteDataSource
 ) : PagingSource<Int, Article>() {
@@ -19,6 +12,7 @@ class NewsPagingSource @Inject constructor(
       val response = remoteDataSource.getNews(page, pageSize)
       if (response is ApiResult.Success) {
         val articles = response.data.toTotalResultArticles().articles
+
         LoadResult.Page(
           data = articles,
           prevKey = if (page == 1) null else page.minus(1),
@@ -39,3 +33,5 @@ class NewsPagingSource @Inject constructor(
     }
   }
 }
+
+ */

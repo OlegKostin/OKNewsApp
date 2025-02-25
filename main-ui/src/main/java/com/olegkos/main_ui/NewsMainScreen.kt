@@ -32,13 +32,14 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
         // Теперь вы можете обработать ошибку, например:
         Text(
           text = "Ошибка загрузки: ${error.message}" +
-              "загрузки: ${error.cause }",
+              "загрузки: ${error.cause}",
           color = Color.Red,
           modifier = Modifier.align(
             alignment = Alignment.Start
           )
         )
       }
+
       is LoadState.NotLoading -> NewsList(news)
     }
   }
@@ -48,14 +49,18 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
 fun NewsList(news: LazyPagingItems<ArticleUI>) {
   LazyColumn(modifier = Modifier.fillMaxSize()) {
     items(news.itemCount) { index ->
+
       val article = news[index]
       article?.let {
-        AsyncImage(
-          model = it.urlToImage,
-          contentDescription = "Image",
-          modifier = Modifier.fillMaxWidth(),
-          contentScale = ContentScale.Crop
-        )
+        Column {
+          Text(text = it.publishedAt)
+          AsyncImage(
+            model = it.urlToImage,
+            contentDescription = "Image",
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop
+          )
+        }
       }
     }
   }

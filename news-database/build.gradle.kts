@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  namespace = "com.olegkos.newsdata"
+  namespace = "com.olegkos.news_database"
   compileSdk = 35
 
   defaultConfig {
@@ -34,22 +34,14 @@ dependencies {
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.appcompat)
-  implementation(libs.material)
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
-
-
-
-  implementation(libs.kotlin.coroutine.core)
-  ksp(libs.hilt.compiler)
-  implementation(libs.hilt.android)
 
   implementation(libs.paging.compose)
 
+
   ksp(libs.androidx.room.compiler)
   implementation(libs.androidx.room.ktx)
+  implementation(libs.androidx.room.paging)
 
-  implementation(project(":newsapi"))
-  implementation(project(":news-database"))
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
 }
